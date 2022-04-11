@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
+import { Link as RouterLink } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import CameraIcon from "@mui/icons-material/PhotoCamera";
@@ -15,7 +16,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 
 function Copyright() {
@@ -33,35 +33,14 @@ function Copyright() {
 
 const theme = createTheme();
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=20&f.dating.period=19&toppieces=True`;
 
 export default function Album() {
   const data: TApiResponse = useApiGet(url);
   const artwork = data.data;
-  const [open, setOpen] = useState(false);
-  const [currentArtPiece, setCurrentArtPiece] = useState({});
-  const handleOpen = (artIndex) => {
-    setCurrentArtPiece(artwork.artObjects[artIndex]);
-    console.log(currentArtPiece);
-    setOpen(true);
-  };
-  const handleClose = () => setOpen(false);
-  // console.log(artwork);
-
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  console.log(artwork);
 
   const searchItems = (searchValue) => {
     setSearchInput(searchValue);
@@ -84,7 +63,7 @@ export default function Album() {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            Rijksmuseum Pronkstukken
+            Rijksmuseum
           </Typography>
         </Toolbar>
       </AppBar>
@@ -154,32 +133,7 @@ export default function Album() {
                             <Typography>{art.principalOrFirstMaker}</Typography>
                           </CardContent>
                           <CardActions>
-                            <Button onClick={handleOpen} size="small">
-                              Details
-                            </Button>
-                            <Modal
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                                <Typography
-                                  id="modal-modal-title"
-                                  variant="h6"
-                                  component="h2"
-                                >
-                                  Text in a modal
-                                </Typography>
-                                <Typography
-                                  id="modal-modal-description"
-                                  sx={{ mt: 2 }}
-                                >
-                                  Duis mollis, est non commodo luctus, nisi erat
-                                  porttitor ligula.
-                                </Typography>
-                              </Box>
-                            </Modal>
+                            <Button size="small">Details</Button>
                           </CardActions>
                         </Card>
                       </Grid>
@@ -187,7 +141,7 @@ export default function Album() {
                   })
                 : artwork.artObjects.map((art: any, index) => {
                     return (
-                      <Grid key={art.id} item xs={12} sm={6} md={4}>
+                      <Grid key={index} item xs={12} sm={6} md={4}>
                         <Card
                           sx={{
                             height: "100%",
@@ -213,37 +167,9 @@ export default function Album() {
                             <Typography>{art.principalOrFirstMaker}</Typography>
                           </CardContent>
                           <CardActions>
-                            <Button
-                              onClick={() => handleOpen(index)}
-                              size="small"
-                            >
+                            <RouterLink to={`/detail/${art.id}`}>
                               Details
-                            </Button>
-                            {Object.keys(currentArtPiece).length && (
-                              <Modal
-                                open={open}
-                                onClose={handleClose}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                              >
-                                <Box sx={style}>
-                                  <Typography
-                                    id="modal-modal-title"
-                                    variant="h6"
-                                    component="h2"
-                                  >
-                                    test
-                                  </Typography>
-                                  <Typography
-                                    id="modal-modal-description"
-                                    sx={{ mt: 2 }}
-                                  >
-                                    Duis mollis, est non commodo luctus, nisi
-                                    erat porttitor ligula.
-                                  </Typography>
-                                </Box>
-                              </Modal>
-                            )}
+                            </RouterLink>
                           </CardActions>
                         </Card>
                       </Grid>
