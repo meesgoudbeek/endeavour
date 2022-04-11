@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useFetch from "react-fetch-hook";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
@@ -10,7 +9,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -18,6 +16,7 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Modal from "@mui/material/Modal";
+import { Input } from "@mui/material";
 
 function Copyright() {
   return (
@@ -50,12 +49,34 @@ const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=20&f.d
 
 export default function Album() {
   const data: TApiResponse = useApiGet(url);
-  if (!data.loading) console.log(data.data);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const artwork = data.data;
+  const [open, setOpen] = useState(false);
+  const [currentArtPiece, setCurrentArtPiece] = useState({});
+  const handleOpen = (artIndex) => {
+    setCurrentArtPiece(artwork.artObjects[artIndex]);
+    console.log(currentArtPiece);
+    setOpen(true);
+  };
+  const handleClose = () => setOpen(false);
+  // console.log(artwork);
 
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
+  const searchItems = (searchValue) => {
+    setSearchInput(searchValue);
+    if (searchInput !== "") {
+      const filteredData = artwork.artObjects.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(artwork.artObjects);
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -95,64 +116,139 @@ export default function Album() {
               >
                 Aan de slag met de meesterwerken
               </Typography>
+              <Input
+                placeholder="Zoeken..."
+                onChange={(e) => searchItems(e.target.value)}
+              />
             </Container>
           </Box>
           <Container sx={{ py: 8 }} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
-              {artwork.artObjects.map((art: any) => (
-                <Grid item key={art.id} xs={12} sm={6} md={4}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                  >
-                    <CardMedia
-                      sx={{ objectPosition: "0 15%" }}
-                      component="img"
-                      height="200"
-                      image={art.webImage.url}
-                      alt="random"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {art.title}
-                      </Typography>
-                      <Typography>{art.principalOrFirstMaker}</Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button onClick={handleOpen} size="small">
-                        Details
-                      </Button>
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <Typography
-                            id="modal-modal-title"
-                            variant="h6"
-                            component="h2"
-                          >
-                            Text in a modal
-                          </Typography>
-                          <Typography
-                            id="modal-modal-description"
-                            sx={{ mt: 2 }}
-                          >
-                            Duis mollis, est non commodo luctus, nisi erat
-                            porttitor ligula.
-                          </Typography>
-                        </Box>
-                      </Modal>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
+              {searchInput.length > 1
+                ? filteredResults.map((art: any) => {
+                    return (
+                      <Grid key={art.id} item xs={12} sm={6} md={4}>
+                        <Card
+                          sx={{
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <CardMedia
+                            sx={{ objectPosition: "0 15%" }}
+                            component="img"
+                            height="200"
+                            image={art.webImage.url}
+                            alt="random"
+                          />
+                          <CardContent sx={{ flexGrow: 1 }}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="h2"
+                            >
+                              {art.title}
+                            </Typography>
+                            <Typography>{art.principalOrFirstMaker}</Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button onClick={handleOpen} size="small">
+                              Details
+                            </Button>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                                <Typography
+                                  id="modal-modal-title"
+                                  variant="h6"
+                                  component="h2"
+                                >
+                                  Text in a modal
+                                </Typography>
+                                <Typography
+                                  id="modal-modal-description"
+                                  sx={{ mt: 2 }}
+                                >
+                                  Duis mollis, est non commodo luctus, nisi erat
+                                  porttitor ligula.
+                                </Typography>
+                              </Box>
+                            </Modal>
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                    );
+                  })
+                : artwork.artObjects.map((art: any, index) => {
+                    return (
+                      <Grid key={art.id} item xs={12} sm={6} md={4}>
+                        <Card
+                          sx={{
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <CardMedia
+                            sx={{ objectPosition: "0 15%" }}
+                            component="img"
+                            height="200"
+                            image={art.webImage.url}
+                            alt="random"
+                          />
+                          <CardContent sx={{ flexGrow: 1 }}>
+                            <Typography
+                              gutterBottom
+                              variant="h6"
+                              component="h2"
+                            >
+                              {art.title}
+                            </Typography>
+                            <Typography>{art.principalOrFirstMaker}</Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button
+                              onClick={() => handleOpen(index)}
+                              size="small"
+                            >
+                              Details
+                            </Button>
+                            {Object.keys(currentArtPiece).length && (
+                              <Modal
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                              >
+                                <Box sx={style}>
+                                  <Typography
+                                    id="modal-modal-title"
+                                    variant="h6"
+                                    component="h2"
+                                  >
+                                    test
+                                  </Typography>
+                                  <Typography
+                                    id="modal-modal-description"
+                                    sx={{ mt: 2 }}
+                                  >
+                                    Duis mollis, est non commodo luctus, nisi
+                                    erat porttitor ligula.
+                                  </Typography>
+                                </Box>
+                              </Modal>
+                            )}
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                    );
+                  })}
             </Grid>
           </Container>
         </main>
