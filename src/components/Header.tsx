@@ -1,10 +1,19 @@
-import Button from '@mui/material/Button'
-import React from 'react'
+import { AppBar, Toolbar, Typography, Link } from "@mui/material";
+import CameraIcon from "@mui/icons-material/PhotoCamera";
 
 function Header() {
   return (
-    <div><Button variant="contained">Hello World</Button></div>
-  )
+    <Link href="/">
+      <AppBar position="relative">
+        <Toolbar>
+          <CameraIcon sx={{ mr: 2 }} />
+          <Typography variant="h6" color="inherit" noWrap>
+            Rijksmuseum
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Link>
+  );
 }
 
-export default Header
+export default Header;

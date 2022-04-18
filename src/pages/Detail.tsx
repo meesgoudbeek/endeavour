@@ -1,22 +1,24 @@
 import { useParams } from "react-router-dom";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
-import AppBar from "@mui/material/AppBar";
-import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Container,
+  Grid,
+  styled,
+  Typography,
+} from "@mui/material";
 
-const theme = createTheme();
+const Img = styled("img")({
+  display: "block",
+  width: "100%",
+  maxHeight: "500px",
+  objectFit: "cover",
+  objectPosition: "0 20%",
+});
 
 export default function Detail() {
   const { id } = useParams();
@@ -26,44 +28,72 @@ export default function Detail() {
   console.log(artwork);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Rijksmuseum
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <>
       {artwork && (
         <main>
-          {/* Hero unit */}
           <Box
             sx={{
-              bgcolor: "background.paper",
               pt: 8,
               pb: 6,
             }}
           >
-            <Container maxWidth="sm">
-              <Typography
-                component="h1"
-                variant="h3"
-                align="center"
-                color="text.primary"
-                gutterBottom
-              >
-                {artwork.artObject.title}
-              </Typography>
-              <Typography align="center" color="text.secondary" paragraph>
-                {artwork.artObject.description}
-              </Typography>
-              <img src={artwork.artObject.webImage.url} alt="" />
+            <Container sx={{ py: 8 }} maxWidth="lg">
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={8}>
+                  <Img
+                    alt={artwork.artObject.title}
+                    src={artwork.artObject.webImage.url}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="h4" component="div" gutterBottom>
+                    {artwork.artObject.title}
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    {artwork.artObject.scLabelLine}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>
+                        {" "}
+                        <Typography variant="body1">Beschrijving</Typography>
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography variant="body1">
+                        {artwork.artObject.description}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography variant="body1">
+                        Technische informatie
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography variant="body1">
+                        {`Dit kunstwerk is gemaakt met ${artwork.artObject.physicalMedium}`}
+                        .
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </Grid>
+              </Grid>
             </Container>
           </Box>
         </main>
       )}
-    </ThemeProvider>
+    </>
   );
 }
