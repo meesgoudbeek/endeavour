@@ -1,16 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Container,
-  Grid,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, styled, Typography } from "@mui/material";
+import Information from "../components/Information";
 
 const Img = styled("img")({
   display: "block",
@@ -24,12 +15,11 @@ const Detail = () => {
   const { id } = useParams();
   const url = `https://www.rijksmuseum.nl/api/nl/collection/${id}?key=Jvg08nQv`;
   const data: TApiResponse = useApiGet(url);
-  const artwork = data.data;
-  console.log(artwork);
+  const artworkDetail = data.data;
 
   return (
     <>
-      {artwork && (
+      {artworkDetail && (
         <main>
           <Box
             sx={{
@@ -41,53 +31,20 @@ const Detail = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={8}>
                   <Img
-                    alt={artwork.artObject.title}
-                    src={artwork.artObject.webImage.url}
+                    alt={artworkDetail.artObject.title}
+                    src={artworkDetail.artObject.webImage.url}
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant="h4" component="div" gutterBottom>
-                    {artwork.artObject.title}
+                    {artworkDetail.artObject.title}
                   </Typography>
                   <Typography variant="subtitle1">
-                    {artwork.artObject.scLabelLine}
+                    {artworkDetail.artObject.scLabelLine}
                   </Typography>
                 </Grid>
-                <Grid item>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography>
-                        <Typography variant="body1">Beschrijving</Typography>
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography variant="body1">
-                        {artwork.artObject.description}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                  <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                    >
-                      <Typography variant="body1">
-                        Technische informatie
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography variant="body1">
-                        {`Dit kunstwerk is gemaakt met ${artwork.artObject.physicalMedium}`}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                </Grid>
               </Grid>
+              <Information artworkDetail={artworkDetail} />
             </Container>
           </Box>
         </main>

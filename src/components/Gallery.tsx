@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 const Gallery = () => {
-  const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=20&f.dating.period=18&toppieces=True`;
+  const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=18&f.dating.period=18&toppieces=True`;
   const data: TApiResponse = useApiGet(url);
   const artwork = data.data;
   const [filteredResults, setFilteredResults] = useState([]);

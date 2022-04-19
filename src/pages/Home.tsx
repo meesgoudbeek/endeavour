@@ -5,7 +5,6 @@ const Home = () => {
   return (
     <>
       <main>
-        {/* Hero unit */}
         <Box
           sx={{
             bgcolor: "background.paper",
