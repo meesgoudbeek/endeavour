@@ -23,10 +23,10 @@ const Home = () => {
   const [searchInput, setSearchInput] = useState("");
   console.log(artwork);
 
-  const searchItems = (searchValue) => {
+  const searchItems = (searchValue: string) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
-      const filteredData = artwork.artObjects.filter((item) => {
+      const filteredData = artwork.artObjects.filter((item: string) => {
         return Object.values(item)
           .join("")
           .toLowerCase()
@@ -67,14 +67,19 @@ const Home = () => {
               >
                 Aan de slag met de meesterwerken
               </Typography>
+            </Container>
+          </Box>
+          <Container sx={{ py: 8 }} maxWidth="lg">
+            <Box
+              sx={{
+                pb: 4,
+              }}
+            >
               <Input
                 placeholder="Zoeken..."
                 onChange={(e) => searchItems(e.target.value)}
               />
-            </Container>
-          </Box>
-          <Container sx={{ py: 8 }} maxWidth="lg">
-            {/* End hero unit */}
+            </Box>
             <Grid container spacing={4}>
               {searchInput.length > 1
                 ? filteredResults.map((art: any) => {
@@ -97,7 +102,7 @@ const Home = () => {
                           <CardContent sx={{ flexGrow: 1 }}>
                             <Typography
                               gutterBottom
-                              variant="h5"
+                              variant="h6"
                               component="h2"
                             >
                               {art.title}
@@ -111,7 +116,7 @@ const Home = () => {
                       </Grid>
                     );
                   })
-                : artwork.artObjects.map((art: any, index) => {
+                : artwork.artObjects.map((art: any, index: number) => {
                     return (
                       <Grid key={index} item xs={12} sm={6} md={4}>
                         <Card
