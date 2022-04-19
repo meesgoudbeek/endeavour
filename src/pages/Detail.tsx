@@ -20,7 +20,7 @@ const Img = styled("img")({
   objectPosition: "0 20%",
 });
 
-export default function Detail() {
+const Detail = () => {
   const { id } = useParams();
   const url = `https://www.rijksmuseum.nl/api/nl/collection/${id}?key=Jvg08nQv`;
   const data: TApiResponse = useApiGet(url);
@@ -61,7 +61,6 @@ export default function Detail() {
                       id="panel1a-header"
                     >
                       <Typography>
-                        {" "}
                         <Typography variant="body1">Beschrijving</Typography>
                       </Typography>
                     </AccordionSummary>
@@ -84,7 +83,6 @@ export default function Detail() {
                     <AccordionDetails>
                       <Typography variant="body1">
                         {`Dit kunstwerk is gemaakt met ${artwork.artObject.physicalMedium}`}
-                        .
                       </Typography>
                     </AccordionDetails>
                   </Accordion>
@@ -96,4 +94,6 @@ export default function Detail() {
       )}
     </>
   );
-}
+};
+
+export default Detail;

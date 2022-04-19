@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, Link } from "@mui/material";
 import CameraIcon from "@mui/icons-material/PhotoCamera";
 
-function Header() {
+const Header = () => {
   return (
     <Link href="/">
       <AppBar position="relative">
@@ -14,6 +14,6 @@ function Header() {
       </AppBar>
     </Link>
   );
-}
+};
 
 export default Header;
