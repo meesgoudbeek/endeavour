@@ -8,7 +8,7 @@ const Img = styled("img")({
   width: "100%",
   maxHeight: "600px",
   objectFit: "cover",
-  objectPosition: "0 20%",
+  objectPosition: "0 10%",
 });
 
 const Detail = () => {
@@ -16,6 +16,7 @@ const Detail = () => {
   const url = `https://www.rijksmuseum.nl/api/nl/collection/${id}?key=Jvg08nQv`;
   const data: TApiResponse = useApiGet(url);
   const artworkDetail = data.data;
+  console.log(artworkDetail);
 
   return (
     <>
@@ -30,15 +31,15 @@ const Detail = () => {
                 />
               </Grid>
               <Grid item xs={12} md={12}>
-                <Typography variant="h5" component="div" gutterBottom>
+                <Typography variant="h4" component="h1" gutterBottom>
                   {artworkDetail.artObject.title}
                 </Typography>
                 <Typography variant="subtitle1">
                   {artworkDetail.artObject.scLabelLine}
                 </Typography>
               </Grid>
+              <Information artworkDetail={artworkDetail} />
             </Grid>
-            <Information artworkDetail={artworkDetail} />
           </Container>
         </main>
       )}
