@@ -31,7 +31,7 @@ export const useApiGet = (url: string): TApiResponse => {
 
   useEffect(() => {
     getAPIData();
-  });
+  },[]);
 
   return { status, statusText, data, error, loading };
 };
