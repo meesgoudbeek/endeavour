@@ -29,14 +29,14 @@ const Detail = () => {
           >
             <Container sx={{ py: 8 }} maxWidth="lg">
               <Grid container spacing={2}>
-                <Grid item xs={12} md={8}>
+                <Grid item xs={12} md={12}>
                   <Img
                     alt={artworkDetail.artObject.title}
                     src={artworkDetail.artObject.webImage.url}
                   />
                 </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="h4" component="div" gutterBottom>
+                <Grid item xs={12} md={12}>
+                  <Typography variant="h5" component="div" gutterBottom>
                     {artworkDetail.artObject.title}
                   </Typography>
                   <Typography variant="subtitle1">

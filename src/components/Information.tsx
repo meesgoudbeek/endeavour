@@ -16,9 +16,7 @@ const Information = ({ artworkDetail }) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>
-            <Typography variant="body1">Beschrijving</Typography>
-          </Typography>
+          <Typography variant="body1">Beschrijving</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant="body1">
