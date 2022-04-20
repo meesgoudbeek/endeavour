@@ -6,7 +6,6 @@ import {
   CardContent,
   Typography,
   CardActions,
-  Button,
 } from "@mui/material";
 
 const Cards = (art: any) => {
@@ -36,9 +35,9 @@ const Cards = (art: any) => {
         <CardActions>
           <RouterLink
             to={`/detail/${artPiece.objectNumber}`}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
           >
-            <Button size="small">Details</Button>
+            Details
           </RouterLink>
         </CardActions>
       </Card>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
 import { Container, Box, Input, Grid } from "@mui/material";
 import Cards from "./Cards";
