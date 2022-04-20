@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApiGet, TApiResponse } from "../services/useFetchHook";
 import { Container, Box, Input, Grid } from "@mui/material";
 import Cards from "./Cards";
@@ -7,8 +7,10 @@ const Gallery = () => {
   const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=18&f.dating.period=18&toppieces=True`;
   const data: TApiResponse = useApiGet(url);
   const artwork = data.data;
+
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+
   const searchItems = (searchValue: string) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
