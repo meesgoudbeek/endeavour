@@ -1,12 +1,22 @@
-import { useState } from "react";
-import { useApiGet, TApiResponse } from "../services/useFetchHook";
+import { useEffect, useState } from "react";
 import { Container, Box, Input, Grid } from "@mui/material";
 import Cards from "./Cards";
+import axios from "axios";
 
 const Gallery = () => {
   const url = `https://www.rijksmuseum.nl/api/nl/collection?key=Jvg08nQv&ps=18&f.dating.period=18&toppieces=True`;
-  const data: TApiResponse = useApiGet(url);
-  const artwork = data.data;
+  const [artwork, setArtwork] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await axios.get(url);
+        setArtwork(result.data.artObjects);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [url]);
 
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -14,7 +24,7 @@ const Gallery = () => {
   const searchItems = (searchValue: string) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
-      const filteredData = artwork.artObjects.filter((item: string) => {
+      const filteredData = artwork.filter((item: string) => {
         return Object.values(item)
           .join("")
           .toLowerCase()
@@ -22,7 +32,7 @@ const Gallery = () => {
       });
       setFilteredResults(filteredData);
     } else {
-      setFilteredResults(artwork.artObjects);
+      setFilteredResults(artwork);
     }
   };
 
@@ -44,7 +54,7 @@ const Gallery = () => {
             ? filteredResults.map((art: any) => {
                 return <Cards key={art.id} art={art} />;
               })
-            : artwork.artObjects.map((art: any) => {
+            : artwork.map((art: any) => {
                 return <Cards key={art.id} art={art} />;
               })}
         </Grid>

@@ -20,9 +20,7 @@ const Information = ({ artworkDetail }) => {
             <Typography variant="body1">Beschrijving</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography variant="body1">
-              {artworkDetail.artObject.description}
-            </Typography>
+            <Typography variant="body1">{artworkDetail.description}</Typography>
           </AccordionDetails>
         </Accordion>
       </Grid>
@@ -39,7 +37,7 @@ const Information = ({ artworkDetail }) => {
           </AccordionSummary>
           <AccordionDetails>
             <Typography variant="body1">
-              {`Dit kunstwerk is gemaakt met ${artworkDetail.artObject.plaqueDescriptionDutch}`}
+              {`Dit kunstwerk is gemaakt met ${artworkDetail.plaqueDescriptionDutch}`}
             </Typography>
           </AccordionDetails>
         </Accordion>

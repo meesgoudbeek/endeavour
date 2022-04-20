@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useApiGet, TApiResponse } from "../services/useFetchHook";
-import { Box, Container, Grid, styled, Typography } from "@mui/material";
+import { Container, Grid, styled, Typography } from "@mui/material";
 import Information from "../components/Information";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Img = styled("img")({
   display: "block",
@@ -14,9 +15,18 @@ const Img = styled("img")({
 const Detail = () => {
   const { id } = useParams();
   const url = `https://www.rijksmuseum.nl/api/nl/collection/${id}?key=Jvg08nQv`;
-  const data: TApiResponse = useApiGet(url);
-  const artworkDetail = data.data;
-  console.log(artworkDetail);
+  const [artworkDetail, setArtwork] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await axios.get(url);
+        setArtwork(result.data.artObject);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [url]);
 
   return (
     <>
@@ -26,16 +36,16 @@ const Detail = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
                 <Img
-                  alt={artworkDetail.artObject.title}
-                  src={artworkDetail.artObject.webImage.url}
+                  alt={artworkDetail.title}
+                  src={artworkDetail.webImage.url}
                 />
               </Grid>
               <Grid item xs={12} md={12}>
                 <Typography variant="h4" component="h1" gutterBottom>
-                  {artworkDetail.artObject.title}
+                  {artworkDetail.title}
                 </Typography>
                 <Typography variant="subtitle1">
-                  {artworkDetail.artObject.scLabelLine}
+                  {artworkDetail.scLabelLine}
                 </Typography>
               </Grid>
               <Information artworkDetail={artworkDetail} />
