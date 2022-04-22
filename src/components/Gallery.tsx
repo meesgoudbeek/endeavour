@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Box, Input, Grid } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 import Cards from "./Cards";
 import axios from "axios";
 
@@ -41,11 +43,17 @@ const Gallery = () => {
       <Box
         sx={{
           pb: 4,
+          textAlign: "center",
         }}
       >
         <Input
           placeholder="Zoeken..."
           onChange={(e) => searchItems(e.target.value)}
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
         />
       </Box>
       {artwork && (

@@ -40,7 +40,7 @@ const Detail = () => {
                   src={artworkDetail.webImage.url}
                 />
               </Grid>
-              <Grid item xs={12} md={12}>
+              <Grid item xs={12} md={12} sx={{ textAlign: "center" }}>
                 <Typography variant="h4" component="h1" gutterBottom>
                   {artworkDetail.title}
                 </Typography>

@@ -20,11 +20,11 @@ const Cards = (art: any) => {
         }}
       >
         <CardMedia
-          sx={{ objectPosition: "0 15%" }}
+          sx={{ objectPosition: "0 20%" }}
           component="img"
-          height="200"
+          height="300"
           image={artPiece.webImage.url}
-          alt="random"
+          alt={artPiece.title}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h6" component="h2">
