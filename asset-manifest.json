@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/endeavour/static/css/main.b9c957ad.css",
-    "main.js": "/endeavour/static/js/main.2b11e3b2.js",
+    "main.js": "/endeavour/static/js/main.7966b375.js",
     "static/js/787.cb95de8d.chunk.js": "/endeavour/static/js/787.cb95de8d.chunk.js",
     "static/media/roboto-all-500-normal.woff": "/endeavour/static/media/roboto-all-500-normal.52cb737b682eb9661ee1.woff",
     "static/media/roboto-all-700-normal.woff": "/endeavour/static/media/roboto-all-700-normal.ef6d1d09b20b877fee4e.woff",
@@ -37,11 +37,11 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/endeavour/static/media/roboto-greek-ext-700-normal.9674bc0ae12c2551d9d1.woff2",
     "index.html": "/endeavour/index.html",
     "main.b9c957ad.css.map": "/endeavour/static/css/main.b9c957ad.css.map",
-    "main.2b11e3b2.js.map": "/endeavour/static/js/main.2b11e3b2.js.map",
+    "main.7966b375.js.map": "/endeavour/static/js/main.7966b375.js.map",
     "787.cb95de8d.chunk.js.map": "/endeavour/static/js/787.cb95de8d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b9c957ad.css",
-    "static/js/main.2b11e3b2.js"
+    "static/js/main.7966b375.js"
   ]
 }
