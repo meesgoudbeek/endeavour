@@ -22,7 +22,7 @@ const Gallery = () => {
 
   const [search, setNewSearch] = useState("");
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: any) => {
     setNewSearch(e.target.value);
   };
 

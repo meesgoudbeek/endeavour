@@ -2,6 +2,7 @@
 
 This is a small React project made to showcase art pieces from the Rijksmuseum.
 The website consists of a homepage with artpieces and a detail page for each piece. I've split up the pages into components.
+Added a simple search so the user can filter through the shown artpieces. Then they can click on details to show the art piece with more information.
 
 To do's in the future could consist of:
 

@@ -36,9 +36,13 @@ const Information = ({ artworkDetail }) => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography variant="body1">
-              {`Dit kunstwerk is gemaakt met ${artworkDetail.plaqueDescriptionDutch}`}
-            </Typography>
+            {artworkDetail.plaqueDescriptionDutch ? (
+              <Typography variant="body1">
+                {`${artworkDetail.plaqueDescriptionDutch}`}
+              </Typography>
+            ) : (
+              <Typography variant="subtitle1">{`Geen informatie`}</Typography>
+            )}
           </AccordionDetails>
         </Accordion>
       </Grid>
