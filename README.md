@@ -1,3 +1,14 @@
+# Endeavour assesment.
+
+This is a small React project made to showcase art pieces from the Rijksmuseum.
+The website consists of a homepage with artpieces and a detail page for each piece. I've split up the pages into components.
+
+To do's in the future could consist of:
+
+- Make a custom React fetch hook to get data and import in components where used.
+- Build out UI and add animation
+- Add possibility for user to choose what art to show/ add more filtering options.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

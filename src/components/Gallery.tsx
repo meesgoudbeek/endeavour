@@ -20,23 +20,20 @@ const Gallery = () => {
     })();
   }, [url]);
 
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
+  const [search, setNewSearch] = useState("");
 
-  const searchItems = (searchValue: string) => {
-    setSearchInput(searchValue);
-    if (searchInput !== "") {
-      const filteredData = artwork.filter((item: string) => {
-        return Object.values(item)
+  const handleSearchChange = (e) => {
+    setNewSearch(e.target.value);
+  };
+
+  const filtered = !search
+    ? artwork
+    : artwork.filter((art: string) => {
+        return Object.values(art)
           .join("")
           .toLowerCase()
-          .includes(searchInput.toLowerCase());
+          .includes(search.toLowerCase());
       });
-      setFilteredResults(filteredData);
-    } else {
-      setFilteredResults(artwork);
-    }
-  };
 
   return (
     <Container sx={{ py: 8 }} maxWidth="lg">
@@ -48,7 +45,8 @@ const Gallery = () => {
       >
         <Input
           placeholder="Zoeken..."
-          onChange={(e) => searchItems(e.target.value)}
+          value={search}
+          onChange={handleSearchChange}
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />
@@ -58,13 +56,9 @@ const Gallery = () => {
       </Box>
       {artwork && (
         <Grid container spacing={4}>
-          {searchInput.length > 1
-            ? filteredResults.map((art: any) => {
-                return <Cards key={art.id} art={art} />;
-              })
-            : artwork.map((art: any) => {
-                return <Cards key={art.id} art={art} />;
-              })}
+          {filtered.map((art: any) => {
+            return <Cards key={art.id} art={art} />;
+          })}
         </Grid>
       )}
     </Container>
