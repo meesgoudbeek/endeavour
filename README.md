@@ -9,7 +9,7 @@ To do's in the future could consist of:
 - Make a custom React fetch hook to get data and import in components where used.
 - Build out UI and add animation
 - Add possibility for user to choose what art to show/ add more filtering options.
-- Better image compression and loading.
+- Better image compression/loading.
 - Add typescript interfacing
 
 # Getting Started with Create React App

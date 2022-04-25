@@ -3,7 +3,7 @@ import CameraIcon from "@mui/icons-material/PhotoCamera";
 
 const Header = () => {
   return (
-    <Link href="./">
+    <Link href="/endeavour">
       <AppBar position="relative">
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
